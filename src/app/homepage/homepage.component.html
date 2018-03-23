@@ -1,0 +1,7 @@
+<app-header [totalQuantity] = "total_qty"></app-header>
+
+<app-homepage-intro></app-homepage-intro>
+
+<app-homepage-about></app-homepage-about>
+
+<app-homepage-shop [coinsArray] = "coins" (addItemEmitter)="addItemToCart($event)"></app-homepage-shop>

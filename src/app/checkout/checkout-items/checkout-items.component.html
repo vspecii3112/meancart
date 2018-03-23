@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <strong>Items</strong><br><br>
+    <table class="table table-condensed table-hover no-bottom-margin">
+      <tbody>
+        <ng-container *ngFor="let cartItem of cartItemsArray"> <!-- loops through the items to be displayed -->
+          <tr>
+            <td class="col-sm-6">
+              <div class="media">
+                <div class="media-left">
+                  <img class="media-object" src="/assets/images/{{cartItem.item.imagePath}}" style="width: 80px; height: 80px;">
+                </div>
+                <div class="media-body">
+                  {{cartItem.item.title}}
+                </div>
+              </div>
+            </td>
+            <td class="col-sm-3">
+              ${{cartItem.item.price}}
+            </td>
+            <td class="col-sm-3">
+              Qty: {{cartItem.qty}}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="row">
+<app-header [totalQuantity] = "total_qty"></app-header>
+</div>
+<br><br><br><br>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Orders
+    </div>
+    <div class="panel-body">
+        <div *ngFor = "let order of orders"> 
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{order.date}}</strong>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-8 right-border">
+                        <div *ngFor = "let item of order.cart.items">
+                            <table class="table table-condensed no-margin">
+                                <tbody>
+                                    <tr>
+                                        <td class="col-sm-6">
+                                            {{item.item.title}}
+                                        </td>
+
+                                        <td class="col-sm-6">
+                                            QTY: {{item.qty}}
+                                        </td>
+                                            
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-4 left-border">
+                            <table class="table borderless no-margin">
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-sm-12 text-center">
+                                                {{order.date}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-sm-12 text-center">
+                                                Total Price: ${{order.cart.totalPrice}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-sm-12 text-center">
+                                                <nav><a routerLink="/order_details/{{order._id}}" routerLinkActive="active">Order Details</a></nav>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

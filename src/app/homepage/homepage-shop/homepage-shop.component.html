@@ -1,0 +1,25 @@
+<div class="container-fluid bg-grey padding-top padding-bottom">
+  <div class="container bg-grey">
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h2>Shop</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor = "let coin of coinsArray; let i=index" id="listOfCoins" name="listOfCoins">
+        <div class="col-sm-3">
+          <div class="panel panel-default">
+            <div class="panel-body text-center">
+              <img src="/assets/images/{{coin.imagePath}}" alt="..." class="img-responsive img-thumbnail" style="width:75%">
+              <h4>{{coin.title}}</h4>
+              <p>{{coin.description}}</p>
+              <p>${{coin.price}}</p>
+              <input type="number" class="text-center" style="width: 4em" size="3" min = "1" max = "999" step="1" id = "itemQty" name = "itemQty" value = "1" maxlength = "3" #itemQty>
+              <button class="btn btn-primary" role="button" id="addItemButton" name="addItemButton" (click)="addItemToCart(coin._id, itemQty.value)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

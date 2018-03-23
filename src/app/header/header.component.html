@@ -1,0 +1,35 @@
+
+<!-- <div class="row">
+  <div class="col-sm-6">
+      <div class="page-header2">
+          <h1>{{title}}</h1>
+      </div>
+  </div>
+</div> -->
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a routerLink="/home" class="navbar-brand">MEANcart</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <ng-container *ngIf = "loggedIn">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Account<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a routerLink="/change_user_password">Change user password</a></li>
+                        <li><a routerLink="/purchase_history">Purchase History</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a class="buttonlink" (click)="userLogout()">Logout</a></li>
+                    </ul>
+                </li>
+            </ng-container>
+            <ng-container *ngIf = "!loggedIn">
+                <li><a routerLink="/login">Login</a></li>
+                <li><a routerLink="/signup">Signup</a></li>
+            </ng-container>
+            <li id="cartLink" name="cartLink"><a routerLink="/cart"><span class="glyphicon glyphicon-shopping-cart"></span>({{totalQuantity}})</a></li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,27 @@
+.no-margin {
+    margin-bottom: 0px;
+}
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.left-border {
+    border-left: 1px solid #ddd
+}
+
+.right-border {
+    border-right: 1px solid #ddd
+}
+
+.vertical-middle {
+    vertical-align: middle;
+}
+
+.padding-top {
+    padding-top: 25px;
+}
+
+.padding-bottom {
+    padding-bottom: 25px;
+}
