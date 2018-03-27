@@ -10,6 +10,7 @@
 
 # server dependencies
 /server/node_modules
+/server/model/key.js
 
 # IDEs and editors
 /.idea

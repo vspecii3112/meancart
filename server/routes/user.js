@@ -10,6 +10,7 @@ var User = require('../model/user');
 var Order = require('../model/order');
 var Cart = require('../model/cart');
 var domain = require('../model/domain');
+var sendgridAPIKey = require('../model/key');
 
 var domainUrl = new domain;
 
@@ -172,9 +173,10 @@ router.post('/forgot_password', cors(preflightOptions), isNotLoggedIn, function(
                                 //does something
                             }
                             else {
+                                var sendgridkey = new sendgridAPIKey;
                                 var options = {
                                     auth: {
-                                        api_key: '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'
+                                        api_key: sendgridkey.getsendgridKey
                                     }
                                 }
                                 var mailer = nodemailer.createTransport(sgTransport(options));

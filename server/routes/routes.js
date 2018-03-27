@@ -8,6 +8,7 @@ var Coin = require('../model/coin');
 var Cart = require('../model/cart');
 var Order = require('../model/order');
 var domain = require('../model/domain');
+var stripeAPIKey = require('../model/key');
 
 var domainUrl = new domain;
 
@@ -157,7 +158,8 @@ router.post('/make_charge', cors(preflightOptions), isLoggedIn, function(req, re
 
         var cart = new Cart(req.session.cart);  //access the cart session
 
-        var stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
+        var stripekey = new stripeAPIKey;
+        var stripe = require("stripe")(stripekey.getstripeKey);
 
         //this will get the date from the server and format the date to DD-MMM-YYYY
         var today = new Date();
