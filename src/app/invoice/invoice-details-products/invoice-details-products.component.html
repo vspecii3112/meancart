@@ -1,0 +1,36 @@
+<table class="table table-condensed table-bordered no-margin-bottom">
+  <thead>
+      <tr class="active">
+          <th>Product</th>
+          <th>Price</th>
+          <th class="text-right">Quantity</th>
+          <th class="text-right">Total</th>
+      </tr>
+  </thead>
+  <tbody>
+      <ng-container *ngFor="let order of orderedProducts">
+        <tr>
+          <td class="col-sm-6">
+              <div class="media">
+                  <div class="media-left">
+                      <img class="media-object" src="/assets/images/{{order.item.imagePath}}" style="width: 80px; height: 80px;">
+                  </div>
+                  <div class="media-body">
+                      {{order.item.title}}
+                  </div>
+              </div>
+          </td>
+          <td class="col-sm-2 text-right">
+            ${{order.item.price}}
+
+          </td>
+          <td class="col-sm-2 text-right">
+            {{order.qty}}
+          </td>
+          <td class="col-sm-2 text-right">
+            ${{order.item.price * order.qty}}
+          </td>
+      </tr>
+      </ng-container>
+    </tbody>
+  </table>

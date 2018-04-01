@@ -6,72 +6,14 @@
         </div>
     </div><br>
     <ng-container *ngIf="orderExist; else elseBlock">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <strong>Shipping Address</strong><br><br>
-                <strong>{{name}}</strong><br>
-                {{shippingAddress.addressLine1}}<br>
-                {{shippingAddress.addressLine2}}<br>
-                {{shippingAddress.addressCity}}, {{shippingAddress.addressState}}, {{shippingAddress.addressZip}}<br>
-                {{shippingAddress.addressCountry}}<br>
-            </div>
-        </div>
+        <app-invoice-details-shippingaddress 
+        [shipToAddress] = "shippingAddress"
+        [shipToName] = "name"
+        ></app-invoice-details-shippingaddress>
 
-      
-                <table class="table table-condensed table-bordered no-margin-bottom">
-                    <thead>
-                        <tr class="active">
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th class="text-right">Quantity</th>
-                            <th class="text-right">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ng-container *ngFor="let order of orders">
-                          <tr>
-                            <td class="col-sm-6">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <img class="media-object" src="/assets/images/{{order.item.imagePath}}" style="width: 80px; height: 80px;">
-                                    </div>
-                                    <div class="media-body">
-                                        {{order.item.title}}
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="col-sm-2 text-right">
-                              ${{order.item.price}}
-      
-                            </td>
-                            <td class="col-sm-2 text-right">
-                              {{order.qty}}
-                            </td>
-                            <td class="col-sm-2 text-right">
-                              ${{order.item.price * order.qty}}
-                            </td>
-                        </tr>
-                        </ng-container>
-                      </tbody>
-                    </table>
-
-            <table class="table table-condensed table-bordered">
-              <tbody>
-            
-                        <tr>
-                            <td class="text-right col-sm-10">Subtotal</td>
-                            <td class="text-right col-sm-2">${{subTotal}}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right col-sm-10">Shipping</td>
-                            <td class="text-right col-sm-2">$0</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right col-sm-10"><strong>Grand Total</strong></td>
-                            <td class="text-right col-sm-2"><strong>${{subTotal + 0}}</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <app-invoice-details-products [orderedProducts] = "orders"></app-invoice-details-products>
+        
+        <app-invoice-details-total [orderSubTotal] = "subTotal"></app-invoice-details-total>
     </ng-container>
     <ng-template #elseBlock>
         <div class="row">

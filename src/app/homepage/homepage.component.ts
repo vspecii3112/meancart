@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../header/header.component';
 import { HomepageIntroComponent } from './homepage-intro/homepage-intro.component';
 import { HomepageAboutComponent } from './homepage-about/homepage-about.component';
 import { HomepageShopComponent } from './homepage-shop/homepage-shop.component';

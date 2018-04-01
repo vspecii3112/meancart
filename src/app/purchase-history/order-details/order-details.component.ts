@@ -14,7 +14,7 @@ export class OrderDetailsComponent implements OnInit {
 
   private orderID: string = '';
   private orderExist: boolean = true;
-  private name: string ='';
+  private name: string = '';
   private shippingAddress: address = {
     addressLine1: '',
     addressLine2: '',

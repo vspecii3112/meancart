@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HeaderComponent } from '../header/header.component';
 import { ShoppingCartService } from '../services/shopping.cart.service';
 import { UserService } from '../services/user.service';
 

@@ -10,6 +10,10 @@ import { PurchaseHistoryComponent } from './purchase-history/purchase-history.co
 //import { SignupComponent } from '../signup/signup.component';
 //import { ChangeUserPasswordComponent } from '../change-user-password/change-user-password.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+//import { InvoiceDetailsShippingaddressComponent } from '../invoice/invoice-details-shippingaddress/invoice-details-shippingaddress.component';
+//import { InvoiceDetailsProductsComponent } from '../invoice/invoice-details-products/invoice-details-products.component';
+//import { InvoiceDetailsTotalComponent } from '../invoice/invoice-details-total/invoice-details-total.component';
+
 //import { CheckoutComponent } from '../checkout/checkout.component';
 //import { OrderConfirmationComponent } from '../order-confirmation/order-confirmation.component';
 //import { ForgotUserPasswordComponent } from '../password-reset/forgot-user-password/forgot-user-password.component';
@@ -19,6 +23,7 @@ import { ShoppingCartService } from '../services/shopping.cart.service';
 import { isAuthGuard } from '../services/check.auth.service';
 
 import { HeaderModule } from '../header/header.module';
+import { InvoiceModule } from '../invoice/invoice.module';
 
 const purchaseHistoryRoutes: Routes = [
     //{ path: 'home', component: HomepageComponent},
@@ -40,6 +45,7 @@ const purchaseHistoryRoutes: Routes = [
         CommonModule,
         RouterModule.forChild(purchaseHistoryRoutes),
         HeaderModule,
+        InvoiceModule,
         HttpClientModule
     ],
     declarations: [

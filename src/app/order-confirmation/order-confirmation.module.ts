@@ -12,6 +12,10 @@ import { HttpClientModule } from '@angular/common/http';
 //import { OrderDetailsComponent } from '../order-details/order-details.component';
 //import { CheckoutComponent } from '../checkout/checkout.component';
 import { OrderConfirmationComponent } from '../order-confirmation/order-confirmation.component';
+//import { InvoiceDetailsShippingaddressComponent } from '../invoice/invoice-details-shippingaddress/invoice-details-shippingaddress.component';
+//import { InvoiceDetailsProductsComponent } from '../invoice/invoice-details-products/invoice-details-products.component';
+//import { InvoiceDetailsTotalComponent } from '../invoice/invoice-details-total/invoice-details-total.component';
+
 //import { ForgotUserPasswordComponent } from '../password-reset/forgot-user-password/forgot-user-password.component';
 
 import { UserService } from '../services/user.service';
@@ -19,6 +23,7 @@ import { ShoppingCartService } from '../services/shopping.cart.service';
 import { isAuthGuard } from '../services/check.auth.service';
 
 import { HeaderModule } from '../header/header.module';
+import { InvoiceModule } from '../invoice/invoice.module';
 
 const orderConfirmationRoutes: Routes = [
     //{ path: 'home', component: HomepageComponent},
@@ -40,9 +45,12 @@ const orderConfirmationRoutes: Routes = [
         CommonModule,
         RouterModule.forChild(orderConfirmationRoutes),
         HeaderModule,
+        InvoiceModule,
         HttpClientModule
     ],
-    declarations: [OrderConfirmationComponent],
+    declarations: [
+        OrderConfirmationComponent
+    ],
     providers: [
         UserService,
         ShoppingCartService,

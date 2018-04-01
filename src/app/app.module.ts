@@ -5,6 +5,7 @@ import { RouterModule, Routes} from '@angular/router';
 //import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HeaderModule } from './header/header.module';
+import { InvoiceModule } from './invoice/invoice.module';
 import { LoginModule } from './login/login.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
@@ -81,6 +82,7 @@ const appRoutes: Routes = [
     //HttpClientModule,
     StoreModule,
     HeaderModule,
+    InvoiceModule,
     LoginModule,
     HomepageModule,
     ShoppingCartModule,
