@@ -8,6 +8,8 @@ var Coin = require('../model/coin');
 var Cart = require('../model/cart');
 var Order = require('../model/order');
 var domain = require('../model/domain');
+var Currency = require('../model/currency');
+var Fx = require('../model/fxrates');
 var stripeAPIKey = require('../model/key');
 
 var domainUrl = new domain;
@@ -83,6 +85,36 @@ router.post('/add_to_cart/:id', cors(preflightOptions), function(req, res, next)
         console.log(req.session.cart);
         res.json({totalQuantity: cart.totalQty});
     });
+});
+
+router.options('/change_currency/:id', cors(preflightOptions));
+router.get('/change_currency/:id', cors(preflightOptions), function(req, res, next) {
+    var currencySymbol = req.params.id;
+    Fx.findOne({currency: currencySymbol}, function(err, docs) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            req.session.currency = docs;
+            console.log(req.session.currency);
+            res.json({selectedCurrency: req.session.currency});
+        }
+    });
+});
+
+router.options('/check_currency/', cors(preflightOptions));
+router.get('/check_currency/', cors(preflightOptions), function(req, res, next) {
+    if (!req.session.currency) {
+        let defaultCurrency = {
+            currency: "USD",
+            forex: "USD/USD",
+            rate: 1      
+        };
+        res.json({selectedCurrency: defaultCurrency});
+    }
+    else {
+        res.json({selectedCurrency: req.session.currency});
+    }
 });
 
 //this route will remove a single item from the shopping cart

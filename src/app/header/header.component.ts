@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import { UserService } from '../services/user.service';
-
+import { ShoppingCartService } from '../services/shopping.cart.service';
+import { currency } from '../objects/currency.class';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from "../store/model";
 
@@ -14,20 +15,43 @@ export class HeaderComponent implements OnInit{
   
     constructor(
       private _userService: UserService,
+      private shoppingCart: ShoppingCartService,
       private _router: Router,
       private ngRedux: NgRedux<IAppState>
     ) {}
   
     ngOnInit(){
       this.checkAuthentication();
+      this.checkCurrency();
     }
   
-    loggedIn: boolean = false;
-    title: string = 'Bullion Coins Store';
+    private loggedIn: boolean = false;
+    private title: string = 'Bullion Coins Store';
+    
+    private selectedCurrency: currency = {
+      currency: "USD",
+      forex: "USD/USD",
+      rate: 1
+    }
+
+    //private selectedCurrencyRate: number = 1;
   
     @Input() totalQuantity: number;   //gets the total quantity from the parent
-  
-    checkAuthentication(){
+
+    checkCurrency() {
+      this.shoppingCart.checkCurrency()
+        .subscribe(data => {
+          this.selectedCurrency = data.selectedCurrency;
+          //this.currencyEmitter.emit({currency: data.selectedCurrency.currency, rate: data.selectedCurrency.rate});
+        },
+        err => {
+          console.log(err);
+        },
+        () => console.log("check currency complete")
+      )
+    }
+
+    checkAuthentication() {
       this._userService.isLoggedIn()
         .subscribe(data => {
           if(data.authenticated) {
@@ -41,6 +65,18 @@ export class HeaderComponent implements OnInit{
             console.log(err.msg);
           },
           () => console.log('authentication complete')
+        )
+    }
+
+    changeCurrency(currency: string) {
+      this.shoppingCart.changeCurrency(currency)
+        .subscribe(
+          data => {
+            console.log(data.selectedCurrency.currency);
+            this.selectedCurrency = data.selectedCurrency;
+          },
+          err => console.log(err),
+          () => console.log('change currency complete')
         )
     }
   

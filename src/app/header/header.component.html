@@ -29,6 +29,13 @@
                 <li><a routerLink="/login">Login</a></li>
                 <li><a routerLink="/signup">Signup</a></li>
             </ng-container>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Currency: {{selectedCurrency.currency}}<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="buttonlink" (click)="changeCurrency('CAD')">CAD</a></li>
+                    <li><a class="buttonlink" (click)="changeCurrency('USD')">USD</a></li>
+                </ul>
+            </li>
             <li id="cartLink" name="cartLink"><a routerLink="/cart"><span class="glyphicon glyphicon-shopping-cart"></span>({{totalQuantity}})</a></li>
         </ul>
     </div>

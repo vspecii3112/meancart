@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HomepageIntroComponent } from './homepage-intro/homepage-intro.component';
 import { HomepageAboutComponent } from './homepage-about/homepage-about.component';
 import { HomepageShopComponent } from './homepage-shop/homepage-shop.component';

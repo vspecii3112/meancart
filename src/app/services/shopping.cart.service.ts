@@ -58,5 +58,15 @@ export class ShoppingCartService {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         return this._http.post(DOMAIN.url + '/cart_update', bodyString, {headers: headers, withCredentials: true})
             .catch(error => Observable.throw(error));
-    }  
+    }
+
+    changeCurrency(currency: string) {
+        return this._http.get(DOMAIN.url + '/change_currency/' + currency, {withCredentials: true})
+            .catch(error => Observable.throw(error.json()));
+    }
+
+    checkCurrency() {
+        return this._http.get(DOMAIN.url + '/check_currency/', {withCredentials: true})
+            .catch(error => Observable.throw(error.json()));
+    }
 }
