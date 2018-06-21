@@ -11,9 +11,15 @@
         [shipToName] = "name"
         ></app-invoice-details-shippingaddress>
 
-        <app-invoice-details-products [orderedProducts] = "orders"></app-invoice-details-products>
+        <app-invoice-details-products
+        [currency] = "currency"
+        [orderedProducts] = "orders">
+        </app-invoice-details-products>
         
-        <app-invoice-details-total [orderSubTotal] = "subTotal"></app-invoice-details-total>
+        <app-invoice-details-total
+        [currency] = "currency"
+        [orderSubTotal] = "subTotal">
+        </app-invoice-details-total>
     </ng-container>
     <ng-template #elseBlock>
         <div class="row">

@@ -4,4 +4,8 @@
 
 <app-homepage-about></app-homepage-about>
 
-<app-homepage-shop [coinsArray] = "coins" (addItemEmitter)="addItemToCart($event)"></app-homepage-shop>
+<app-homepage-shop
+[coinsArray] = "coins"
+[currency] = "currency"
+(addItemEmitter)="addItemToCart($event)"
+></app-homepage-shop>

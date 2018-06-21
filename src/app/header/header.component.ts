@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 import { ShoppingCartService } from '../services/shopping.cart.service';
@@ -12,7 +12,16 @@ import { IAppState } from "../store/model";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
+
+  private loggedIn: boolean = false;
+  private title: string = 'Bullion Coins Store';
   
+  private selectedCurrency: currency = {
+    currency: "USD",
+    forex: "USD/USD",
+    rate: 1
+  }
+
     constructor(
       private _userService: UserService,
       private shoppingCart: ShoppingCartService,
@@ -25,24 +34,15 @@ export class HeaderComponent implements OnInit{
       this.checkCurrency();
     }
   
-    private loggedIn: boolean = false;
-    private title: string = 'Bullion Coins Store';
-    
-    private selectedCurrency: currency = {
-      currency: "USD",
-      forex: "USD/USD",
-      rate: 1
-    }
-
-    //private selectedCurrencyRate: number = 1;
-  
     @Input() totalQuantity: number;   //gets the total quantity from the parent
+    @Output() outputSelectedCurrency = new EventEmitter<number>();
 
     checkCurrency() {
       this.shoppingCart.checkCurrency()
         .subscribe(data => {
           this.selectedCurrency = data.selectedCurrency;
-          //this.currencyEmitter.emit({currency: data.selectedCurrency.currency, rate: data.selectedCurrency.rate});
+          this.outputSelectedCurrency.emit(data.selectedCurrency);
+          this.ngRedux.dispatch({type: this.selectedCurrency});
         },
         err => {
           console.log(err);
@@ -72,8 +72,8 @@ export class HeaderComponent implements OnInit{
       this.shoppingCart.changeCurrency(currency)
         .subscribe(
           data => {
-            console.log(data.selectedCurrency.currency);
             this.selectedCurrency = data.selectedCurrency;
+            this.ngRedux.dispatch({type: this.selectedCurrency});
           },
           err => console.log(err),
           () => console.log('change currency complete')

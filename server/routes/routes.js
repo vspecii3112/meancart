@@ -6,6 +6,7 @@ var router = express.Router();
 var config = require('../config/database');
 var Coin = require('../model/coin');
 var Cart = require('../model/cart');
+var Round = require('../model/round');
 var Order = require('../model/order');
 var domain = require('../model/domain');
 var Currency = require('../model/currency');
@@ -51,7 +52,7 @@ router.post('/cart_update', cors(preflightOptions), function(req, res, next) {
     req.session.cart = cart;        //cart session will be saved automatically when response is sent back
     console.log(req.session.cart);
     
-    res.json({totalQuantity: cart.totalQty, totalPrice: cart.totalPrice});
+    res.json({totalQuantity: cart.totalQty, totalPrice: cart.totalPrice, items: cart.items});
 });
 
 router.options('/get_coin_info', cors(preflightOptions));
@@ -96,8 +97,12 @@ router.get('/change_currency/:id', cors(preflightOptions), function(req, res, ne
         }
         else {
             req.session.currency = docs;
-            console.log(req.session.currency);
-            res.json({selectedCurrency: req.session.currency});
+            let selectedCurrency = {
+                currency: req.session.currency.currency,
+                forex: req.session.currency.forex,
+                rate: req.session.currency.rate
+            }
+            res.json({selectedCurrency});
         }
     });
 });
@@ -113,7 +118,12 @@ router.get('/check_currency/', cors(preflightOptions), function(req, res, next) 
         res.json({selectedCurrency: defaultCurrency});
     }
     else {
-        res.json({selectedCurrency: req.session.currency});
+        let selectedCurrency = {
+            currency: req.session.currency.currency,
+            forex: req.session.currency.forex,
+            rate: req.session.currency.rate
+        }
+        res.json({selectedCurrency});
     }
 });
 
@@ -187,6 +197,11 @@ router.post('/make_charge', cors(preflightOptions), isLoggedIn, function(req, re
     else {
         // Get the payment token submitted by the form:
         var token = req.body.stripeToken; // Using Express
+        var currency = {
+            currency: req.body.currencySymbol,
+            forex: req.body.currencyForex,
+            rate: req.body.currencyRate
+        }
 
         var cart = new Cart(req.session.cart);  //access the cart session
 
@@ -230,10 +245,21 @@ router.post('/make_charge', cors(preflightOptions), isLoggedIn, function(req, re
                 res.status(500).json({success: false, msg: err.message});
             }
             else {
+                if (currency.rate !== 1) {
+                    cart.totalPrice = 0;
+                    Object.keys(cart.items).forEach(function(key) {
+                        cart.items[key].item.price = Round(cart.items[key].item.price * currency.rate, 2);
+                        cart.items[key].price = Round(cart.items[key].item.price * cart.items[key].qty , 2);
+                        cart.totalPrice = Round(cart.totalPrice, 2) + Round(cart.items[key].price, 2);
+                    });
+                    cart.totalPrice = Round(cart.totalPrice, 2);
+                }
                 
+                console.log(currency);
                 var order = new Order({
                     user: req.user,     //from passport.js
                     cart: cart,
+                    currency: currency,
                     address: {
                         addressLine1: charge.source.address_line1,
                         addressLine2: charge.source.address_line2,
@@ -254,7 +280,7 @@ router.post('/make_charge', cors(preflightOptions), isLoggedIn, function(req, re
                     }
                     else {
                         console.log('making charge');
-                        console.log(charge);
+                        //console.log(charge);
                         req.session.cart = null;
                         res.json({success: true, orderID: result._id});  
                     }

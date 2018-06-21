@@ -2,7 +2,7 @@
   <tbody>
     <tr>
       <td class="text-right col-sm-10">Subtotal</td>
-      <td class="text-right col-sm-2">${{orderSubTotal}}</td>
+      <td class="text-right col-sm-2">${{coinPriceDisplay(roundPrice(orderSubTotal, 2))}} {{currency.currency}}</td>
     </tr>
     <tr>
       <td class="text-right col-sm-10">Shipping</td>
@@ -10,7 +10,7 @@
     </tr>
     <tr>
       <td class="text-right col-sm-10"><strong>Grand Total</strong></td>
-      <td class="text-right col-sm-2"><strong>${{orderSubTotal + 0}}</strong></td>
+      <td class="text-right col-sm-2"><strong>${{coinPriceDisplay(roundPrice(orderSubTotal, 2))}} {{currency.currency}}</strong></td>
     </tr>
   </tbody>
 </table>

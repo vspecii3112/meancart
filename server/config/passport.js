@@ -63,6 +63,7 @@ passport.use('localSignup', new LocalStrategy({
             console.log(newUser);
             newUser.save(function(err, result) {
                 if (err) {  //if theres an error
+                    //console.log(err);
                     return done(err);
                 }
                 else {  //user is added

@@ -412,18 +412,32 @@
 
 	<div class="col-sm-4">
 		<div class="row">
-			<app-checkout-items [cartItemsArray] = "cartItems"></app-checkout-items>
+			<app-checkout-items
+			[cartItemsArray] = "cartItems"
+			[currency] = "currency">
+			</app-checkout-items>
 		</div>
 
 		<div class="row">
-			<app-checkout-orderdetails [_cartTotalPrice] = "cartTotalPrice"></app-checkout-orderdetails>
+			<app-checkout-orderdetails
+			[_cartTotalPrice] = "cartTotalPrice"
+			[currency] = "currency">
+			</app-checkout-orderdetails>
 		</div>
 		
 		<div class="row">
 			<div class="text-center">
-				<button type="submit" class="btn btn-success">Buy now ${{cartTotalPrice}}</button>
+				<button type="submit" class="btn btn-success">Buy now ${{coinPriceDisplay(roundPrice(cartTotalPrice, 2))}} {{currency.currency}}</button>
 			</div>
 		</div>
+		<ng-container *ngIf="errorMsg">
+			<br>
+			<div class="row">
+			<div class="alert alert-danger text-center">
+			  {{errorMsg}}
+			</div>
+			</div>
+		  </ng-container>
 	</div>
 </form>
 </div>

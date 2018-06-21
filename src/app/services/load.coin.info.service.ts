@@ -13,6 +13,6 @@ export class LoadCoinInfoService {
 
     getCoins() {
         return this._http.get(DOMAIN.url + '/get_coin_info')
-            .catch(error => Observable.throw(error.json()));
+            .catch(error => Observable.throw(error));
     }
 }

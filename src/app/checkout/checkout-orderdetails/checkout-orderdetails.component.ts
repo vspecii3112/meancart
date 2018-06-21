@@ -1,4 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
+import { currency } from '../../objects/currency.class';
 
 @Component({
   selector: 'app-checkout-orderdetails',
@@ -14,5 +15,10 @@ export class CheckoutOrderdetailsComponent implements OnInit {
 
   @Input()
     _cartTotalPrice: number;
+  @Input()
+    currency: currency;
 
+  coinPriceDisplay(price: number): string {
+    return price.toFixed(2);
+  }
 }

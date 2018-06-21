@@ -4,6 +4,10 @@
     /* border-bottom: 1px solid #eee; */
 }
 
+.font-size-really-small {
+  font-size: 10px;
+}
+
 .buttonlink {
     cursor: pointer;
 }

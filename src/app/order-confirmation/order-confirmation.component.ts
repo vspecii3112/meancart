@@ -3,6 +3,7 @@ import { Router, ActivatedRoute} from '@angular/router';
 import { UserService } from '../services/user.service';
 import { ShoppingCartService } from '../services/shopping.cart.service';
 import { address } from '../objects/address.class';
+import { currency } from '../objects/currency.class';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -25,6 +26,11 @@ export class OrderConfirmationComponent implements OnInit {
   }
   private date: string = '';
   private total_qty: number = 0;    //stores the number of items in the variable and this number is shown beside the shopping cart link
+  private currency: currency = {
+    currency: " USD",
+    forex: "USD/USD",
+    rate: 1
+  };
 
   constructor(
     private user: UserService,
@@ -62,7 +68,9 @@ export class OrderConfirmationComponent implements OnInit {
         this.orders = data.orderDetails.cart.items;
         this.subTotal = data.orderDetails.cart.totalPrice;
         this.date = data.orderDetails.date;
+        this.currency = data.orderDetails.currency;
         //console.log(data.orderDetails);
+        //console.log(this.currency);
 
       },
       err => {},

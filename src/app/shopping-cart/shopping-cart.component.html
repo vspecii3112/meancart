@@ -1,4 +1,7 @@
-<app-header [totalQuantity] = "total_qty"></app-header>
+<app-header
+[totalQuantity] = "total_qty"
+(outputSelectedCurrency) = "shoppingCartItems($event)">
+</app-header>
 
 <ng-container *ngIf = "total_qty!=0"> <!-- if there are items in shopping cart -->
     <div class="container padding-top padding-bottom">
@@ -35,10 +38,10 @@
                             <div class="text-danger">{{qtyMsg[i]}}</div>
                         </td>
                         <td class="col-sm-2 text-right">
-                            ${{updateCartForm.controls.carts.controls[i].controls.productPrice.value}}
+                            ${{coinPrice(updateCartForm.controls.carts.controls[i].controls.productPrice.value)}} {{currency.currency}}
                         </td>
                         <td class="col-sm-2 text-right">
-                            ${{prdQty.value * updateCartForm.controls.carts.controls[i].controls.productPrice.value}}
+                            ${{coinPrice(updateCartForm.controls.carts.controls[i].controls.productPrice.value, prdQty.value)}} {{currency.currency}}
                         </td>
                         <td class="col-sm-1">
                             <a class="buttonlink pull-right" (click)="removeItem(i)"><span class="glyphicon glyphicon-trash"></span></a>
@@ -64,7 +67,7 @@
                         <td class="col-sm-5">   </td>
                         <td class="col-sm-2">   </td>
                         <td class="text-right col-sm-2"><h5>Subtotal</h5></td>
-                        <td class="text-right col-sm-2"><h5><strong>${{cartTotalPrice}}</strong></h5></td>
+                        <td class="text-right col-sm-2"><h5><strong>${{coinPriceDisplay(cartTotalPrice)}} {{currency.currency}}</strong></h5></td>
                         <td class="col-sm-1">   </td>
                     </tr>
                     <tr>
@@ -77,8 +80,8 @@
                     <tr>
                         <td class="col-sm-5">   </td>
                         <td class="col-sm-2">   </td>
-                        <td class="text-right col-sm-2"><h3>Grand Total</h3></td>
-                        <td class="text-right col-sm-2"><h3><strong>${{cartTotalPrice + 0}}</strong></h3></td>
+                        <td class="text-right col-sm-2"><h5><strong>Grand Total</strong></h5></td>
+                        <td class="text-right col-sm-2"><h5><strong>${{coinPriceDisplay(cartTotalPrice)}} {{currency.currency}}</strong></h5></td>
                         <td class="col-sm-1">   </td>
                     </tr>
                 </tbody>

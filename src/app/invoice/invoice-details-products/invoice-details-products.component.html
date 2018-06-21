@@ -21,14 +21,14 @@
               </div>
           </td>
           <td class="col-sm-2 text-right">
-            ${{order.item.price}}
+            ${{coinPriceDisplay(roundPrice(order.item.price, 2))}} {{currency.currency}}
 
           </td>
           <td class="col-sm-2 text-right">
             {{order.qty}}
           </td>
           <td class="col-sm-2 text-right">
-            ${{order.item.price * order.qty}}
+            ${{coinPriceDisplay(roundPrice(order.item.price * order.qty, 2))}} {{currency.currency}}
           </td>
       </tr>
       </ng-container>

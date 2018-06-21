@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShoppingCartService } from '../../services/shopping.cart.service';
 import { UserService } from '../../services/user.service';
+import { currency } from '../../objects/currency.class';
 
 @Component({
   selector: 'app-purchase-history',

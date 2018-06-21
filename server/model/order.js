@@ -10,6 +10,10 @@ var orderSchema = new Schema({
         type: Object,
         required: true
     },
+    currency: {
+        type: Object,
+        required: true
+    },
     address: {
         type: Object,
         required: true

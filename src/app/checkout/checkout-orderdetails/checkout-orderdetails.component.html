@@ -8,7 +8,7 @@
             Subtotal:
           </td>
           <td class="col-sm-6">
-            ${{_cartTotalPrice}}
+            ${{coinPriceDisplay(_cartTotalPrice)}} {{currency.currency}}
           </td>
         </tr>
         <tr>
@@ -24,7 +24,7 @@
             <strong>Grand Total:</strong>
           </td>
           <td class="col-sm-6">
-            <strong>${{_cartTotalPrice + 0}}</strong>
+            <strong>${{coinPriceDisplay(_cartTotalPrice)}} {{currency.currency}}</strong>
           </td>
         </tr>
       </tbody>

@@ -67,7 +67,7 @@ export class ForgotUserPasswordComponent implements OnInit {
     else {
       this.userService.forgotPassword(_forgotPwForm.value.email)
       .subscribe(data => {
-        console.log(data);
+        //console.log(data);
         this.successMsg = "An email has been sent to " + _forgotPwForm.value.email + " to reset your password";
         this.forgotPwForm.reset();
       },

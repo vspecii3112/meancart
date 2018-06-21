@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgRedux } from '@angular-redux/store';
+import { IAppState } from "../store/model";
 import { HeaderComponent } from '../header/header.component';
 import { CheckoutOrderdetailsComponent } from './checkout-orderdetails/checkout-orderdetails.component';
 import { CheckoutItemsComponent } from './checkout-items/checkout-items.component';
 
 import { ShoppingCartService } from '../services/shopping.cart.service';
+import { currency } from '../objects/currency.class';
+import { round } from '../modules/round.module';
 
 declare var Stripe: any;
 
@@ -41,6 +45,14 @@ export class CheckoutComponent implements OnInit{
     private cardExpiry: any;
     private cardCvc: any;
     private postalCode: any;
+
+    private currencySubscription: any;
+    //private currencyRate: number = 1;
+    private currency: currency = {
+      currency: " USD",
+      forex: "USD/USD",
+      rate: 1
+    };
   
     checkoutOrderInfo = {
       name: '',
@@ -54,7 +66,8 @@ export class CheckoutComponent implements OnInit{
     constructor (
       private shoppingcart: ShoppingCartService,
       private _router: Router,
-      private _fb: FormBuilder
+      private _fb: FormBuilder,
+      private ngRedux: NgRedux<IAppState>
     ) {}
   
     ngOnInit() {
@@ -77,6 +90,41 @@ export class CheckoutComponent implements OnInit{
       });
     }
 
+    convertTotalPrice() {
+      if (this.cartItems.length !== 0){
+        if (this.currency.rate == 1 ){
+          this.cartTotalPrice = 0;
+          this.cartItems.map(x => {
+            this.cartTotalPrice = this.cartTotalPrice + x.price;
+          });
+        }
+        else {
+          this.cartTotalPrice = 0;
+          this.cartItems.map(x => {
+            this.cartTotalPrice = this.cartTotalPrice + (round(x.item.price * this.currency.rate, 2) * x.qty);
+          });
+        }
+      }
+    }
+
+    getCurrencyRate() {
+      this.currencySubscription = this.ngRedux.select<any>()
+      .subscribe(newCurrency => {
+        //this.currencyRate = newCurrency.switchCurrencyReducer.currency.rate;
+        this.currency = newCurrency.switchCurrencyReducer.currency;
+        this.convertTotalPrice();    //converts the price using the selected currency
+      });
+    }
+    
+    coinPriceDisplay(price: number): string {
+      return price.toFixed(2);
+    }
+    
+    //this function is used so that the html template can access the round function module 
+    roundPrice(num: number, precision: number): number {
+      return round(num, precision);
+    }
+
     checkCart() {
       this.shoppingcart.cartCheckout()
         .subscribe(
@@ -90,7 +138,8 @@ export class CheckoutComponent implements OnInit{
             }
             else {
               this.cartItems=data.coins;
-              this.cartTotalPrice = data.totalPrice;
+              //this.cartTotalPrice = data.totalPrice;
+              this.getCurrencyRate()
               //console.log(this.cartItems);
             }
             this.total_qty = data.totalQuantity;
@@ -115,7 +164,7 @@ export class CheckoutComponent implements OnInit{
     }
   
     stripeTokenHandler(token: any) {
-      this.shoppingcart.makeCharge(token.id)
+      this.shoppingcart.makeCharge(token.id, this.currency)
       .subscribe(
         data => {
           if (data.success) {
@@ -125,14 +174,8 @@ export class CheckoutComponent implements OnInit{
           }
         },
         err => {
-          // if there is no cart session, it will redirect back to the home page
-          if (err.msg=='cart session does not exist') {
-            console.log(err.msg);
-            this._router.navigate(['/home']);
-          }
-          else {
-            this.errorMsg = "There was an error processing your request. Check your account if your order was placed. Otherwise please try again."
-          }
+            console.log(err.error.msg);
+            this.errorMsg = err.error.msg;
         },
         () => {console.log('Checkout complete');}
       )
@@ -232,5 +275,10 @@ export class CheckoutComponent implements OnInit{
       }
       
     }
+    ngOnDestroy() {                    // <- New
+      if(this.currencySubscription){
+        this.currencySubscription.unsubscribe();
+      }
+    }  
     
   }

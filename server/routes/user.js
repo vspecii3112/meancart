@@ -38,11 +38,15 @@ router.options('/adduser', cors(preflightOptions));
 router.post('/adduser', cors(preflightOptions), isNotLoggedIn, function(req, res, next) {
     passport.authenticate('localSignup', function(err, user, info) {
         if (err) {
-            res.status(500).json({msg: "Internal server error"});
+            if(err.code==11000){
+                res.status(409).json({success:false, msg: 'Email already exist'});
+            }
+            else {
+                res.status(500).json({msg: "Internal server error"});
+            }
         }
-
-        if(!user) {
-            res.status(409).json({success:false, msg: 'User already exist'});
+        else if(!user) {
+            res.status(409).json({success:false, msg: 'Username already exist'});
         }
         else {
             req.logIn(user, function(err) {
@@ -63,8 +67,7 @@ router.post('/authenticate', cors(preflightOptions), isNotLoggedIn, function(req
         if (err) {
             res.status(500).json({msg: "Internal server error"});
         }
-
-        if(!user) {
+        else if(!user) {
             return res.status(401).json({msg: 'Incorrect login'});
         }
         else {
@@ -83,7 +86,7 @@ router.post('/authenticate', cors(preflightOptions), isNotLoggedIn, function(req
 router.options('/purchase_history', cors(preflightOptions));
 router.get('/purchase_history', cors(preflightOptions), isLoggedIn, function(req, res, next) {
     //req.user(from passport) contains the user ID which is needed for MongoDB to find the correct user
-    Order.find({user: req.user}, function(err, orders){
+    Order.find({user: req.user}).sort({_id: 1}).exec(function(err, orders) {
         if (err) {
             res.status(500).json({msg: "Internal server error"});
         }
@@ -91,6 +94,14 @@ router.get('/purchase_history', cors(preflightOptions), isLoggedIn, function(req
             res.json({customerOrders: orders});
         }
     });
+    /*Order.find({user: req.user}, function(err, orders){
+        if (err) {
+            res.status(500).json({msg: "Internal server error"});
+        }
+        else {
+            res.json({customerOrders: orders});
+        }
+    });*/
 });
 
 router.options('/order_details/:id', cors(preflightOptions));

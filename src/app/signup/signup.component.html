@@ -47,6 +47,14 @@
               <button class="btn btn-lg btn-success btn-block" type="submit">Submit</button>
             </fieldset>
               </form>
+
+              <ng-container *ngIf="errorMsg">
+                <br>
+                <div class="alert alert-danger text-center">
+                  {{errorMsg}}
+                </div>
+              </ng-container>
+              
           </div>
       </div>
     </div>

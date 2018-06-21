@@ -4,13 +4,13 @@ import { createLogger } from 'redux-logger';
 import { combineReducers, createStore, Store, applyMiddleware } from 'redux';
 
 import { IAppState } from './model';
-import { loginReducer } from '../store/reducers';
+import { loginReducer, switchCurrencyReducer } from '../store/reducers';
 //import { LoginActions } from '../login/login.actions';
 //import { logoutReducer } from '../header/header.reducers';
 //import { LogoutActions } from '../header/header.actions';
 
 const store: Store<IAppState> = createStore(
-    combineReducers({loginReducer}),
+    combineReducers({loginReducer, switchCurrencyReducer}),
     applyMiddleware(createLogger())
   ) as Store<IAppState>;
   

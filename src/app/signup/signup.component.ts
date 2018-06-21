@@ -19,6 +19,7 @@ export class SignupComponent implements OnInit {
   private usernameMsg: string = '';
   private passwordMsg: string = '';
   private total_qty: number = 0;
+  private errorMsg: string = "";
 
   constructor (
     private _userService: UserService,
@@ -55,11 +56,12 @@ export class SignupComponent implements OnInit {
   }
 
   clearMsg() {
-    this.fnameMsg = '';
-    this.lnameMsg = '';
-    this.emailMsg = '';
-    this.usernameMsg = '';
-    this.passwordMsg = '';
+    this.fnameMsg = "";
+    this.lnameMsg = "";
+    this.emailMsg = "";
+    this.usernameMsg = "";
+    this.passwordMsg = "";
+    this.errorMsg = "";
   }
 
   signup(_signupForm) {
@@ -102,7 +104,7 @@ export class SignupComponent implements OnInit {
         }
       },
       err => {
-        console.log(err.error.msg);
+        this.errorMsg = err.error.msg;
       },
       () => console.log('signup complete')
       )
