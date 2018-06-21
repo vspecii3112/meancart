@@ -12,6 +12,7 @@
 /server/node_modules
 /server/model/key.js
 /server/config/database.js
+/server/bin
 
 # IDEs and editors
 /.idea
