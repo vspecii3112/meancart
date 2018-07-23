@@ -179,7 +179,7 @@ router.get('/get_total_quantity', cors(preflightOptions), function(req, res, nex
 
 router.options('/checkout', cors(preflightOptions));
 router.get('/checkout', cors(preflightOptions), isLoggedIn, function(req, res, next) {
-    if (!req.session.cart) {
+    if (!req.session.cart || req.session.cart.totalQty == 0) {
         res.json({redirect: 'home'});
     }
     else {
