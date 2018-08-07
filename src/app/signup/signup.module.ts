@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { LoginComponent } from '../login/login.component';
 //import { PurchaseHistoryComponent } from '../purchase-history/purchase-history.component';
 import { SignupComponent } from '../signup/signup.component';
+import { SignupFormComponent } from "./signup-form/signup-form.component";
 
 
 import { UserService } from '../services/user.service';
@@ -29,7 +30,7 @@ const signupRoutes: Routes = [
         ReactiveFormsModule,
         HttpClientModule
     ],
-    declarations: [SignupComponent],
+    declarations: [SignupComponent, SignupFormComponent],
     providers: [
         isNotAuthGuard,
         UserService,

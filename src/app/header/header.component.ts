@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit{
 
   private loggedIn: boolean = false;
   private title: string = 'Bullion Coins Store';
+  private currencySubscription: any;
   
   private selectedCurrency: currency = {
     currency: "USD",
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit{
     }
   
     @Input() totalQuantity: number;   //gets the total quantity from the parent
-    @Output() outputSelectedCurrency = new EventEmitter<number>();
+    @Output() outputSelectedCurrency = new EventEmitter<currency>();
 
     checkCurrency() {
       this.shoppingCart.checkCurrency()
@@ -79,14 +80,15 @@ export class HeaderComponent implements OnInit{
           () => console.log('change currency complete')
         )
     }
-  
+
     userLogout(){
       this._userService.logoutfn()
         .subscribe(
           data => {
               this.ngRedux.dispatch({type: "LOGOUT"});
               this.checkAuthentication();   //Checks the authentication of the user to get the latest update so that Angular will re-render the page when it reloads the same URL.
-              this._router.navigate(['/home']);
+              //this.checkCurrency();
+              this._router.navigate(["/logout"]);
           },
           err => console.log('Internal server error'),
           () => console.log('logout complete')

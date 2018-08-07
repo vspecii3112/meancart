@@ -59,14 +59,13 @@ export class ShoppingCartComponent implements OnInit {
       this.qtyMsg = [];
 
       //this will automatically update the total price and the store session
-      for(let i=0; i<data.carts.length; i++) {
-        //checks if the quantity value is valid
-        if (Number(data.carts[i].productQuantity) < 1 || !Number.isInteger(Number(data.carts[i].productQuantity))) {
+      data.carts.map( (x, i) => {
+        if (Number(x.productQuantity) < 1 || !Number.isInteger(Number(x.productQuantity))) {
           this.qtyMsg[i] = "invalid input";
           valid = false;
         }
-        totalPrice = totalPrice + (round(data.carts[i].productPrice * this.currency.rate, 2) * data.carts[i].productQuantity);
-      }
+        totalPrice = totalPrice + (round(x.productPrice * this.currency.rate, 2) * x.productQuantity);
+      });
       //console.log(this.updateCartForm);
       //console.log(data);
       if (valid) {
@@ -141,19 +140,19 @@ export class ShoppingCartComponent implements OnInit {
     control.removeAt(0);
   }
 
-  shoppingCartItems(cur: number) {
+  shoppingCartItems(cur: any) {
     this.shoppingcart.getCartItems()    //getCartItems observable gets the shopping cart items and stores it into the cartItems array
       .subscribe(
         data => {
           if (data.coins) {
             this.cartItems=data.coins;
-            if (cur == 1) {
+            if (cur.rate == 1) {
               this.cartTotalPrice = round(data.totalPrice, 2);  //total price of all the items in the shopping cart
             }
             else {
               this.cartTotalPrice = 0;
               data.coins.map(x => {
-                this.cartTotalPrice = this.cartTotalPrice + (round(x.item.price * cur, 2) * x.qty);
+                this.cartTotalPrice = this.cartTotalPrice + (round(x.item.price * cur.rate, 2) * x.qty);
               });
             }
             this.total_qty = data.totalQuantity;  //total quantity of items in the shopping cart

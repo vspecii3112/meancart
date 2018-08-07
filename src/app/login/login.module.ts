@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { HeaderComponent } from '../header/header.component';
 //import { HomepageComponent } from '../homepage/homepage.component';
 import { LoginComponent } from '../login/login.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 //import { PurchaseHistoryComponent } from '../purchase-history/purchase-history.component';
 import { SignupComponent } from '../signup/signup.component';
 //import { ChangeUserPasswordComponent } from '../change-user-password/change-user-password.component';
@@ -32,7 +33,7 @@ const loginRoutes: Routes = [
     //{ path: 'change_user_password', component: ChangeUserPasswordComponent, canActivate: [isAuthGuard]},
     //{ path: 'order_confirmation/:id', component: OrderConfirmationComponent, canActivate: [isAuthGuard]},
     //{ path: 'reset/:token', component: ResetPasswordComponent},
-    { path: 'forgot', component: ForgotUserPasswordComponent, canActivate: [isNotAuthGuard]},
+    { path: 'forgot', component: ForgotUserPasswordComponent, canActivate: [isNotAuthGuard]}
     //{ path: '', redirectTo: '/home', pathMatch: 'full'}
   ]
   
@@ -45,7 +46,7 @@ const loginRoutes: Routes = [
         ReactiveFormsModule,
         HttpClientModule
     ],
-    declarations: [LoginComponent],
+    declarations: [LoginComponent, LoginFormComponent],
     providers: [
         UserService,
         ShoppingCartService,

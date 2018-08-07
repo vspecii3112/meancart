@@ -16,6 +16,7 @@ import { PasswordResetModule } from './password-reset/password-reset.module';
 import { PurchaseHistoryModule } from './purchase-history/purchase-history.module';
 import { OrderConfirmationModule } from './order-confirmation/order-confirmation.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
+import { LogoutModule } from './logout/logout.module';
 
 import { AppComponent } from './app.component';
 //import { ChangeUserPasswordComponent } from './change-user-password/change-user-password.component';
@@ -92,6 +93,7 @@ const appRoutes: Routes = [
     PurchaseHistoryModule,
     OrderConfirmationModule,
     UserProfileModule,
+    LogoutModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
