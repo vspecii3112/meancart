@@ -1,112 +1,16 @@
-<app-header
-[totalQuantity] = "total_qty"
-(outputSelectedCurrency) = "shoppingCartItems($event)">
-</app-header>
+<app-header [totalQuantity] = "total_qty"></app-header>
 
 <ng-container *ngIf = "total_qty!=0"> <!-- if there are items in shopping cart -->
-    <div class="container padding-top padding-bottom">
-        <div class="row text-center">
-            <h3>Shopping Cart</h3>
-        </div><br>
-        <form [formGroup]="updateCartForm">
-            <div formArrayName="carts">
-            <table class="table table-hover table-condensed">
-                <thead>
-                    <tr class="active">
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th class="text-right">Price</th>
-                        <th class="text-right">Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let cart of updateCartForm.controls.carts.controls; let i=index"> <!-- loops through the items to be displayed -->
-                    <tr [formGroupName]="i">
-                        <td class="col-sm-5">
-                            <div class="media">
-                                <div class="media-left">
-                                    <img class="media-object" src="/assets/images/{{cartItems[i].item.imagePath}}" style="width: 80px; height: 80px;">
-                                </div>
-                                <div class="media-body">
-                                    {{updateCartForm.controls.carts.controls[i].controls.productName.value}}
-                                </div>
-                            </div>
-                        </td>
-                        <td class="col-sm-2">
-                            <input type="number" min = "1" step = "1" max="999" siz = "3" style="width: 5em" class="text-center form-control" id="productQuantity" name="productQuantity" formControlName="productQuantity" #prdQty required>
-                            <div class="text-danger">{{qtyMsg[i]}}</div>
-                        </td>
-                        <td class="col-sm-2 text-right">
-                            ${{coinPrice(updateCartForm.controls.carts.controls[i].controls.productPrice.value)}} {{currency.currency}}
-                        </td>
-                        <td class="col-sm-2 text-right">
-                            ${{coinPrice(updateCartForm.controls.carts.controls[i].controls.productPrice.value, prdQty.value)}} {{currency.currency}}
-                        </td>
-                        <td class="col-sm-1">
-                            <a class="buttonlink pull-right" (click)="removeItem(i)"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
-
-                    </tr>
-                    </ng-container>
-
-                    <!--
-                    <td class="col-sm-1 col-md-1" style="text-align: center">
-                        <input type="number" class="form-control" id="item_quantity" value="{{cartItem.qty}}">
-                    </td>
-                    -->
-                    <tr>
-                            <td class="col-sm-5">   </td>
-                            <td class="col-sm-2">   </td>
-                            <td class="col-sm-2">   </td>
-                            <td class="col-sm-2">   </td>
-                            <td class="col-sm-1">   </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col-sm-5">   </td>
-                        <td class="col-sm-2">   </td>
-                        <td class="text-right col-sm-2"><h5>Subtotal</h5></td>
-                        <td class="text-right col-sm-2"><h5><strong>${{coinPriceDisplay(cartTotalPrice)}} {{currency.currency}}</strong></h5></td>
-                        <td class="col-sm-1">   </td>
-                    </tr>
-                    <tr>
-                        <td class="col-sm-5">   </td>
-                        <td class="col-sm-2">   </td>
-                        <td class="text-right col-sm-2"><h5>Shipping</h5></td>
-                        <td class="text-right col-sm-2"><h5><strong>$0</strong></h5></td>
-                        <td class="col-sm-1">   </td>
-                    </tr>
-                    <tr>
-                        <td class="col-sm-5">   </td>
-                        <td class="col-sm-2">   </td>
-                        <td class="text-right col-sm-2"><h5><strong>Grand Total</strong></h5></td>
-                        <td class="text-right col-sm-2"><h5><strong>${{coinPriceDisplay(cartTotalPrice)}} {{currency.currency}}</strong></h5></td>
-                        <td class="col-sm-1">   </td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-
-            <ng-container *ngIf="qtyMsg===undefined||qtyMsg.length==0; else elseBlock">
-            <div class="row">
-                <div class="col-sm-12">
-                    <a routerLink="/checkout" type="button" class="btn btn-success active pull-right">Checkout</a>            
-                </div>
-            </div>
-            </ng-container>
-            <ng-template #elseBlock>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <a routerLink="/checkout" type="button" class="btn btn-success disabled pull-right">Checkout</a>            
-                    </div>
-                </div>
-            </ng-template>
-            <br>
-        </form>
-    </div>
-
+    <app-shopping-cart-form
+    [cartItems] = "cartItems"
+    [currency] = "currency"
+    [cartTotalPrice] = "cartTotalPrice"
+    [formCheck] = "formCheck"
+    [totalQuantity] = "total_qty"
+    (updateCartEmitter)="updateCart($event)"
+    ></app-shopping-cart-form>
 </ng-container>
+
 <ng-container *ngIf = "total_qty==0"> <!-- if there are no items in shopping cart -->
     <div class="container padding-top">
         <div class="row">

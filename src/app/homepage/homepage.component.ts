@@ -78,7 +78,6 @@ export class HomepageComponent implements OnInit{
       this.currencySubscription = this.ngRedux.select<any>()
       .subscribe(newCurrency => {
         this.currency = newCurrency.switchCurrencyReducer.currency;
-
       });
     }
 

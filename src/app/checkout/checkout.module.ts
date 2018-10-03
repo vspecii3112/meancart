@@ -11,6 +11,7 @@ import { CheckoutComponent } from '../checkout/checkout.component';
 //import { OrderConfirmationComponent } from '../order-confirmation/order-confirmation.component';
 import { CheckoutOrderdetailsComponent } from './checkout-orderdetails/checkout-orderdetails.component';
 import { CheckoutItemsComponent } from './checkout-items/checkout-items.component';
+import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 
 import { UserService } from '../services/user.service';
 import { isAuthGuard } from '../services/check.auth.service';
@@ -44,7 +45,8 @@ const checkoutRoutes: Routes = [
     declarations: [
         CheckoutComponent,
         CheckoutOrderdetailsComponent,
-        CheckoutItemsComponent
+        CheckoutItemsComponent,
+        CheckoutFormComponent
     ],
     providers: [
         UserService,

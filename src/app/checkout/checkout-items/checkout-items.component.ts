@@ -15,7 +15,7 @@ export class CheckoutItemsComponent implements OnInit {
   }
 
   @Input()
-    cartItemsArray: number;
+    cartItemsArray: any;
   @Input()
     currency: currency;
 

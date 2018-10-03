@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 import { ShoppingCartService } from '../services/shopping.cart.service';
@@ -36,13 +36,13 @@ export class HeaderComponent implements OnInit{
     }
   
     @Input() totalQuantity: number;   //gets the total quantity from the parent
-    @Output() outputSelectedCurrency = new EventEmitter<currency>();
+    //@Output() outputSelectedCurrency = new EventEmitter<currency>();
 
     checkCurrency() {
       this.shoppingCart.checkCurrency()
         .subscribe(data => {
           this.selectedCurrency = data.selectedCurrency;
-          this.outputSelectedCurrency.emit(data.selectedCurrency);
+          //this.outputSelectedCurrency.emit(data.selectedCurrency);
           this.ngRedux.dispatch({type: this.selectedCurrency});
         },
         err => {

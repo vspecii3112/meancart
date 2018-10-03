@@ -1,0 +1,28 @@
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.panel-heading {
+    padding: 3px 10px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.no-bottom-margin {
+    margin-bottom: 0px;
+}
+
+.border-outline {
+    outline: 1px solid #ddd;
+}
+
+.padding-top {
+    padding-top: 25px;
+}
+
+.padding-bottom {
+    padding-bottom: 25px;
+}

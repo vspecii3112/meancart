@@ -44,15 +44,22 @@ router.post('/cart_update', cors(preflightOptions), function(req, res, next) {
     var cartArray = req.body;
 
     req.session.cart = null;        //clear the cart in the session
-    var cart = new Cart(req.session.cart ? req.session.cart: {});   //use empty cart object if cart does not exist
-    cartArray.forEach(element => {
-        cart.add(element.item, element.item._id, element.qty)
-    });
-    
-    req.session.cart = cart;        //cart session will be saved automatically when response is sent back
-    console.log(req.session.cart);
-    
-    res.json({totalQuantity: cart.totalQty, totalPrice: cart.totalPrice, items: cart.items});
+
+    //if cart is empty
+    if(cartArray.length == 0 ) {
+        res.json({totalQuantity: 0, totalPrice: 0, items: null});
+    }
+    else {
+        var cart = new Cart(req.session.cart ? req.session.cart: {});   //use empty cart object if cart does not exist
+        cartArray.map(element => {
+            cart.add(element.item, element.item._id, element.qty)
+        });
+        
+        req.session.cart = cart;        //cart session will be saved automatically when response is sent back
+        console.log(req.session.cart);
+        
+        res.json({totalQuantity: cart.totalQty, totalPrice: cart.totalPrice, items: cart.items});
+    }
 });
 
 router.options('/get_coin_info', cors(preflightOptions));
@@ -156,11 +163,12 @@ router.get('/remove_all/:id', cors(preflightOptions), function(req, res, next) {
 router.options('/shopping_cart', cors(preflightOptions));
 router.get('/shopping_cart', cors(preflightOptions), function(req, res, next) {
     if (!req.session.cart) {
-        res.json({coins: null});
+        res.json({cart:null});
     }
     else {
         cart = new Cart(req.session.cart);
-        res.json({coins: cart.generateArray(), totalPrice: cart.totalPrice, totalQuantity: cart.totalQty});
+        res.json({cart});
+        //res.json({coins: cart.generateArray(), totalPrice: cart.totalPrice, totalQuantity: cart.totalQty});
     }
 });
 
